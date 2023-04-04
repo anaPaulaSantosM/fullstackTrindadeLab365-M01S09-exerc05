@@ -43,10 +43,17 @@ app.get('/places', async (request, response) => {
 
 app.delete('/places/:id', async (request, response) => {
     
-        const places = await Place.findByPk()
-        return response.statusCode(204);
-})
+    try{
+        await Place.destroy({
+            where: {
+                id: request.params.id
+            }
+        })
+    responde.status(204);
+    }catch(error){
+        response.status(500);
+    }
+    
 
-app.listen(3333, () => {
-    console.log("Servidor online")
-})
+app.listen(3333, () => console.log("Servidor online"))
+});
